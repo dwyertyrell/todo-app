@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 //reads the backend API URL from an environment variable
-  const API_URL = null // import.meta.env.VITE_APP_API_URL; 
+  const API_URL = import.meta.env.VITE_APP_API_URL; 
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -11,14 +11,14 @@ function App() {
 
   const setTodosDependency = `${setTodos}` 
 
-  // useEffect(() => {
-  //   fetch(`${API_URL/todos}`)
-  //   .then(res => res.json())
-  //   //this works because .then expects a function that takes the result of the previous promise. 
-  //   // alternative way- .then(res => setTodos(res) )
-  //   //.then(setTodos(res) is wrong as it calls the setter function immmediately, before the promise is resovled)
-  //   .then(setTodos)
-  // }, [setTodosDependency])
+  useEffect(() => {
+    fetch(`${API_URL/todos}`)
+    .then(res => res.json())
+    //this works because .then expects a function that takes the result of the previous promise. 
+    // alternative way- .then(res => setTodos(res) )
+    //.then(setTodos(res) is wrong as it calls the setter function immmediately, before the promise is resovled)
+    .then(setTodos)
+  }, [setTodosDependency])
 console.log('hello world')
   return (
 <>
