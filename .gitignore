@@ -20,6 +20,9 @@ backend/package-lock.json
 frontend/dist
 backend/dist
 
+frontend/.env
+backend/.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -30,3 +33,5 @@ backend/dist
 *.njsproj
 *.sln
 *.sw?
+
+.documentation.txt
