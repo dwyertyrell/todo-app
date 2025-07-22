@@ -12,7 +12,7 @@ function App() {
   // const setTodosDependency = `${setTodos}` 
 
   const fetchedTodoList = useCallback(async ()=> {
-        await fetch(`${API_URL}/todos`) //http://localhost:5000/todos  
+        await fetch(`${API_URL}/todos`)  
           .then(res=> res.json())
           .then(data => setTodos(data))
           .catch( err => {
