@@ -9,7 +9,7 @@ function App() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // const setTodosDependency = `${setTodos}` 
+  const setTodosDependency = `${setTodos}` 
 
   const fetchedTodoList = useCallback(async ()=> {
         await fetch(`${API_URL}/todos`)  
@@ -24,7 +24,7 @@ function App() {
             setLoading(false)
           }
           }) 
-  }, [setTodos])
+  }, [setTodosDependency])
 
   useEffect(() => {
     fetchedTodoList()
