@@ -9,51 +9,56 @@ function App() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const setTodosDependency = `${setTodos}` 
-
   const fetchedTodoList = useCallback(async ()=> {
-        await fetch(`${API_URL}/todos`)  
-          .then(res=> res.json())
-          .then(data => setTodos(data))
-          .catch( err => {
-            console.log('couldn\'t fetch data from backend', err);
-            // throw new Error('failed to fetch the existing todo list');
-          })
-          .finally(() => {
-            if (todos) {
-            setLoading(false)
-          }
-          }) 
-  }, [setTodosDependency])
+        try {
+          const response = await fetch(`${API_URL}/todos`);
+          const data = await response.json();
+          setTodos(data);
+          console.log('todos updated with fresh data:', data); // Log the fresh data here
+        } catch (err) {
+          console.log('couldn\'t fetch data from backend', err);
+        } finally {
+          setLoading(false);
+        }
+  }, []) // Empty dependency array since API_URL is a constant
 
   useEffect(() => {
     fetchedTodoList()
-  }, [fetchedTodoList])
+  }, [fetchedTodoList]) // Remove todos dependency to prevent infinite loop
       
-  console.log('todos array is', todos)
   
 
-  const addTodoItem = () => {
-    fetch(`${API_URL}/todos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-         //id is generated in the backend using the in-memory data
-        text: input
-      })
-    }).then(response => {
-      if(!response.ok) {
-        console.log('error adding to todo list:', response.status )
-        throw new Error(`HTTP error status: ${response.status}`)
+  const addTodoItem = async (e) => {
+    e.preventDefault(); // Prevent form submission reload
+    if (!input.trim()) return; // Don't add empty todos and exit this function
+    
+    try {
+      const response = await fetch(`${API_URL}/todos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          text: input
+        })
+      });
+      
+      if (!response.ok) {
+        console.log('error adding to todo list:', response.status);
+        throw new Error(`HTTP error status: ${response.status}`);
       }
-      return response.status(201).json()
-    }).catch (err => {
-      throw new Error('failed to create a todo', err)
-    })
+      
+      // After successfully adding, refetch the todo list and clear input
+      await fetchedTodoList();
+      setInput(''); //clear input space
+      
+    } catch (err) {
+      console.error('failed to create a todo:', err);
+    }
+
   }
-  return (
+
+return (
 <>
   <div className='container'>
     <h1> To Do List</h1>
@@ -67,7 +72,7 @@ function App() {
       <button type = 'submit' >Add</button>
     </form>
 
-    {loading && todos ? <p> ...loading </p> : (
+    {loading ? <p>Loading...</p> : (
       <ul>
         {todos.map((todo)=>{
           return <li key={todo.id}>{todo.text}</li>
