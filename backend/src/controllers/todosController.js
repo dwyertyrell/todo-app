@@ -28,10 +28,10 @@ exports.createTodo = (req, res) => {
 //update a todo
 exports.updateTodo = (req, res) => {
   //selecting the data from the req.body and stringed url paramter, :id
-  const {todoId} = parseInt(req.params.id, 10) //
+  const todoId = parseInt(req.params.id, 10) //
   const {text} = req.body
   //this is the validation 
-  if(!text || typeof text === 'string'){
+  if(!text || typeof text !== 'string'){
     return res.status(400).json({error: 'Invalid todo text'})
   } 
   const todo = updateTodo(todoId, text)
@@ -43,7 +43,7 @@ exports.updateTodo = (req, res) => {
 
 //delete a todo
 exports.deleteTodo = (req, res) => {
-  const {todoId} = parseInt(req.params.id, 10)
+  const todoId = parseInt(req.params.id, 10)
   const todo = deleteTodo(todoId)
   if(!todo){
     return res.status(404).json({error:'Todo is not found'})

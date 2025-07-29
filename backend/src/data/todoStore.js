@@ -26,7 +26,7 @@ function addTodo(text) {
 
 //get a todo by id 
 function getTodoById(todoId) {
-  return todos.find(todoId => todos.id === todoId)
+  return todos.find(todo => todo.id === todoId)
 }
 
 //update a current todo item
@@ -44,7 +44,7 @@ function deleteTodo(todoId) {
 const index = todos.findIndex(todo => todo.id ===todoId)
 if(index === -1) return null
 //.splice returns an array of elements that were removed
-const removed = todos.splice(todoId, 1)[0]
+const removed = todos.splice(index, 1)[0]
 return removed
 } 
 
