@@ -1,15 +1,16 @@
 import { useState, useEffect, useCallback } from 'react'
 import './App.css'
-
+import AddTodoForm from './components/AddTodoForm'
+import TodoList from './components/TodoList'
 //reads the backend API URL from an environment variable
   const API_URL = import.meta.env.VITE_APP_API_URL; 
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const fetchedTodoList = useCallback(async ()=> {
+  const fetchedTodos = useCallback(async ()=> {
         try {
           const response = await fetch(`${API_URL}/todos`);
           const data = await response.json();
@@ -23,24 +24,20 @@ function App() {
   }, []) // Empty dependency array since API_URL is a constant
 
   useEffect(() => {
-    fetchedTodoList()
-  }, [fetchedTodoList]) // Remove todos dependency to prevent infinite loop
+    fetchedTodos()
+  }, [fetchedTodos]) // Remove todos dependency to prevent infinite loop
       
   
 
-  const addTodoItem = async (e) => {
-    e.preventDefault(); // Prevent form submission reload
-    if (!input.trim()) return; // Don't add empty todos and exit this function
-    
+  const addTodoItem = async (text) => {
+   
     try {
       const response = await fetch(`${API_URL}/todos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          text: input
-        })
+        body: JSON.stringify({text})
       });
       
       if (!response.ok) {
@@ -48,36 +45,67 @@ function App() {
         throw new Error(`HTTP error status: ${response.status}`);
       }
       
-      // After successfully adding, refetch the todo list and clear input
-      await fetchedTodoList();
-      setInput(''); //clear input space
-      
+      const newTodo = await response.json()
+      setTodos(prevTodos => [...prevTodos, newTodo]) //due to javascript closure behaviour, manually updating the fetch in a callback (to retrieve current state) needed.
     } catch (err) {
-      console.error('failed to create a todo:', err);
+      console.error('failed to create a todo:', err.message);
     }
-
   }
+
+  const updateTodo = async (id, text) => {
+    setError('');
+    try {
+      const response = await fetch(`${API_URL}/todos/${id}`, {
+        method:'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({text}) //the controller expects an object propery with string type  
+      });
+
+      if(!response.ok) {
+        throw new Error('failed to update todo item')
+      };
+
+      const updatedTodo = await response.json()
+      setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? updatedTodo : todo)) //// due to javascript closure behaviour, we must manually update state
+    }catch (err) {
+      setError(err.message)
+    }
+  }
+
+  const deleteTodo = async (id) => {
+    setError('');
+    try{
+      const response = await fetch(`${API_URL}/todos/${id}`, {
+        method: 'DELETE',
+      });
+
+      if(!response.ok){
+        throw new Error('failed to delete todo')
+      }
+      await response.json()
+      setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id)) // due to javascript closure behaviour, we must manually update state
+    }catch(err){
+      setError(err.message)
+    }
+  }
+
+
 
 return (
 <>
   <div className='container'>
     <h1> To Do List</h1>
 
-    <form onSubmit={addTodoItem}>
-      <input
-        value = {input}
-        onChange = {e => setInput(e.target.value)}
-        placeholder= 'add a new task'
-      ></input>
-      <button type = 'submit' >Add</button>
-    </form>
+    <AddTodoForm onAdd={addTodoItem}/>
+
+    {error && <p style = {{color:'red'}}>{error}</p>}
 
     {loading ? <p>Loading...</p> : (
-      <ul>
-        {todos.map((todo)=>{
-          return <li key={todo.id}>{todo.text}</li>
-        })}
-      </ul>
+     <TodoList 
+      todos ={todos} 
+      onUpdate = {updateTodo} 
+      onDelete ={deleteTodo} 
+     />
     )}
   </div>
   

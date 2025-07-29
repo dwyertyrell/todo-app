@@ -26,4 +26,11 @@ button {
 
 ul {
   padding-left: 1em;
+  list-style: '';
 }
+/* 
+li .todoItem {
+  display: 'flex';
+  align-items: 'center';
+  margin-bottom: 10;
+} */
