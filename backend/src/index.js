@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000
 app.use(cors());
 app.use(express.json()); // parse JSON bodies for all requests
 
-//Redirects each API URL with endpoint '/todos', to the correct routing file
+//Redirects each API URL with endpoint '/todos', to the correct routing file in `routes` dir
 app.use('/todos', todosRouter) 
 
 //404 handler for unmatched routes
