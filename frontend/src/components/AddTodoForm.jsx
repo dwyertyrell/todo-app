@@ -8,6 +8,7 @@ const handleSubmit = (e) => {
    e.preventDefault(); // Prevent form submission reload
    if (text.trim() === '') return; // Don't add empty todos and exit this function
   onAdd(text) //passing the user input into <App/>
+  setText('')
 }
 
   return (

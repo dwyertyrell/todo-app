@@ -30,7 +30,6 @@ function App() {
   
 
   const addTodoItem = async (text) => {
-   
     try {
       const response = await fetch(`${API_URL}/todos`, {
         method: 'POST',
@@ -46,7 +45,10 @@ function App() {
       }
       
       const newTodo = await response.json()
-      setTodos(prevTodos => [...prevTodos, newTodo]) //due to javascript closure behaviour, manually updating the fetch in a callback (to retrieve current state) needed.
+      setTodos(prevTodos => [...prevTodos, newTodo]);
+      
+      // Optionally refetch todos to ensure synchronization
+      await fetchedTodos();
     } catch (err) {
       console.error('failed to create a todo:', err.message);
     }
@@ -96,7 +98,10 @@ return (
   <div className='container'>
     <h1> To Do List</h1>
 
-    <AddTodoForm onAdd={addTodoItem}/>
+    <AddTodoForm 
+    onAdd={addTodoItem}
+    
+    />
 
     {error && <p style = {{color:'red'}}>{error}</p>}
 

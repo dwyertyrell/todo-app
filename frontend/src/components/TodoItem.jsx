@@ -33,8 +33,8 @@ function TodoItem ({todo, onUpdate, onDelete}) {
           <button onClick = {() => setIsEditing(true)}>Edit</button>
           <button onClick ={()=> onDelete(todo.id)}>Delete</button>
         </>
-      )  
-    }
+      )}
+    
     </li>
   )
 }
