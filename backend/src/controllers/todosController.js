@@ -1,3 +1,11 @@
+const {
+  sendSuccess, 
+  sendError,
+  sendCreated,
+  sendNotFound,
+  sendAccepted
+} = require( '../utils/responseHelpers')
+
 //this file validates each HTTP request and then calls functions from databse
 
 const {
@@ -18,11 +26,12 @@ exports.createTodo = (req, res) => {
   const {text} = req.body
 
   if (!text || typeof text !== 'string') {
-    return res.status(400).json({error: 'invalid todo text'});
+    //the exported helper functions contains the json body of the response, allowing the validation to be more concise   
+    return sendError(res, 'invalid todo text', 'something went wrong');
   }
   
   const todo = addTodo(text);
-  res.status(201).json(todo) // parses the string into a JS object, in res body  
+  return sendCreated(res, todo, 'created')
 };
 
 //update a todo
@@ -32,13 +41,13 @@ exports.updateTodo = (req, res) => {
   const {text} = req.body
   //this is the validation 
   if(!text || typeof text !== 'string'){
-    return res.status(400).json({error: 'Invalid todo text'})
+    return sendError(res, 'invalid todo text', 'something went wrong')
   } 
   const todo = updateTodo(todoId, text)
   if(!todo){
-    return res.status(404).json({error: 'Todo not found'})
+    return sendNotFound(res, 'error', 'Todo Not Found')
   }
-  return res.status(202).json(todo)
+  return sendAccepted(res, todo, 'Accepted')
 }
 
 //delete a todo
@@ -46,7 +55,7 @@ exports.deleteTodo = (req, res) => {
   const todoId = parseInt(req.params.id, 10)
   const todo = deleteTodo(todoId)
   if(!todo){
-    return res.status(404).json({error:'Todo is not found'})
+    return sendNotFound(res, 'error', 'Todo not found')
   }
-  return res.status(202).json({message: 'Todo deleted', todo})
+  return sendAccepted(res, todo, 'Accepted')
 }
