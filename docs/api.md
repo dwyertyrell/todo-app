@@ -1,5 +1,7 @@
-# phase 2:
-this phase, I want to focus on making the backend more modular by adding a separate 
+
+**THIS DOCUMENT NEEDS TO BE IMPROVED AND ORGANIZED BEFORE READING**
+
+I wanted to focus on making the backend more modular by adding a separate 
 directory for the in-memory database (`data` dir), and another one for handling the API requests
 ( the `controller` dir).
 at the end of phase 1, index.js file, entry-point file  was holding all the code for the backend, will be refactored 
