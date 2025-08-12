@@ -68,7 +68,8 @@ function App() {
       };
 
       const updatedTodo = await response.json()
-      setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? updatedTodo : todo)) //// due to javascript closure behaviour, we must manually update state
+      setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? updatedTodo : todo)) // due to javascript closure behaviour, we must manually update state
+      await fetchedTodos()
     }catch (err) {
       setError(err.message)
     }
@@ -86,6 +87,7 @@ function App() {
       }
       await response.json()
       setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id)) // due to javascript closure behaviour, we must manually update state
+      await fetchedTodos
     }catch(err){
       setError(err.message)
     }
