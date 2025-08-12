@@ -1,42 +1,62 @@
 
-**THIS DOCUMENT NEEDS TO BE IMPROVED AND ORGANIZED BEFORE READING**
+## How the API managage the flow of data
 
-I wanted to focus on making the backend more modular by adding a separate 
-directory for the in-memory database (`data` dir), and another one for handling the API requests
-( the `controller` dir).
-at the end of phase 1, index.js file, entry-point file  was holding all the code for the backend, will be refactored 
-to only handle the traffic between the in-memory database and the HTTP requests.
-Although the `controller` directory will be handling the logic for the API (HTTP) requests,
-it will be the `routes` directory that will handle the routing of these requests.
-the `routes` dir will focus on url pattern matching and directing these requests 
-to the appropiate controller function
+### How Express handles API request from the Client
+When an API request is made to the backend, it reaches Express and 
 
-in effect, the `index.js` will delegate the requests to the `routes` directory, 
-which will then delegate the requests to the `controller` directory.
+Express creates:
 
-(if `index.js` file directly called `controller` functions, you would lose the ability to 
-cleanly manage routing. It becomes harder to scale the application; harder to add middleware to
-a specific route group. however, the middleware only add validation to the routes that the controller function already adds)
+  - the request object holding data from the client: 
+    - API URL; HTTP Method; request body;  metadata, etc.
+    
+    <small>the api url and the method helps direct a api request to its corresponding router function.</small>
 
+- The empty template of a response object that will be hold the payload. 
 
-export the functions (that mutate the database) from the (in-memory database) 
-todoStore.js, into the controllers dir, so the controller file can update the 
-database straight after it has handled out the HTTP request body accordingly. 
-essentially, it is validating the request body; checking if there are 
-any errors and then converting using json() method.
-Once validated, it can be used back with the rest of the backend code (the database); 
-the controller function pass this data into the database, via the exported functions from the todoStore.js file. 
+  <small>As shown above, the controllers does not actually create the initial response object; Express does this internally for every incoming HTTP request, upon reaching the entry-point.</small>
 
-^^^the flow of this logic above:
+The fetch() callback from the frontend, sends an API request to the backend, through the main entry-point file.
 
-starts when the user sends a request from the 
-frontend- e.g. making a POST request with a JSON body .
-any request starting with `/todos` is forwarded to router in the `route/todos.js`
+This file, being at the highest level of entry, **will validate the endpoint** (link here to the router directing middleware in index.js)before passing onto the router functions; and then the controller functions. 
 
-this tells express to call appropiate controller function, which validates the HTTP request body. 
+The controller functions **will then validate the logic of the request object** of this HTTP method. 
+
+Once validated, the response object is constructed and sent back to the frontend, with a payload. the response helpers would help put the corresponding data into the empty template, and then send the actual http response to the client.
+This would be seen in the calling of a fetch(), which is then used for the client.  
 
 
+---
 
+### Modularising the backend
+
+In [phase 2](./PROJECT_PHASES.md), I wanted to focus on making the backend more modular by adding a separate directory for the [in-memory data](../backend/src/data/todoStore.js) which was initially on the [entry-point file](../backend/src/index.js). 
+
+Another directory was also made for [validating the API requests](../backend/src/controllers).
+At the end of phase 1, the entry-point file that was holding all the code for the backend, will be refactored 
+to only handle the traffic between the API HTTP requests and in-memory database .
+It will be the [routes directory](../backend/src/routes/) that will handle the routing of these requests- by matching URL and directing these requests to the appropiate [controller functions](../backend/src/controllers/)
+
+In effect, the [index.js](../backend/src/index.js) will _delegate_ the requests to the [routes directory](../backend/src/routes/), 
+which will then _delegate_ the requests to the [controller directory](../backend/src/controllers/) - which that has direct access to the [data stored on node server](../backend/src/data/todoStore.js).
+
+_If [index.js file](../backend/src/index.js) directly called [controller functions](../backend/src/controllers/), the ability to cleanly manage routing would be lost as the codebase becomes more complex. Becoming harder to scale the application; harder to add middleware to
+a specific route group. 
+However, in this phase of development, the middlewares that could be placed in the ['/todos' endpoint routing](../backend/src/routes/todos.js), are for adding validation to the request bodies- that which the controller functions exists for_
+
+---
+### How does the controller functions mutate the data
+
+Functions that mutate the database are exported into the controllers directory, so the controllers can update the database straight after it has validated incomming client data in the HTTP request body, accordingly. 
+Once validated, the payload in the `res.body` can be used in the rest of the backend code [the in-memory data](../backend/src/data/todoStore.js); 
+
+A[controller function](../backend/src/controllers/) pass this data into the [in-memory data storage](../backend/src/data), via the [exported access functions](../backend/src/data/todoStore.js).
+Checking if the [access functions](../backend/src/data/todoStore.js) returned any errors, and then stringifying the response object using `res.json()` method- so it can be sent back to the client.
+
+ 
+ 
+
+---
+<!-- 
 ## logic flow of the entry-point file in the backend: index.js
 
 Once the server startup on the docker container or on node `app.listen(PORT,()=>{})`, this creates a HTTP server on the specified port.
@@ -74,3 +94,5 @@ with its middlewares and handlers.
   this, and the 404 handler, are mutaully exclusive. If one runs, the other isn't called.
   therefore, if the request is not handled by the 404 handler and there is an error, this middleware will be called.
   this error could be found in how the controller or data store interacts with the request. 
+
+ -->

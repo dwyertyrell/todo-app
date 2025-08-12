@@ -67,6 +67,9 @@ _Frontend Modularization, Documentation, Advanced backend features_
 
  **Start API and code documentation** 
  - Created a doc directory for understanding this entire codebase. [click here](../docs/README.md) to start reading docs 
+
 <!-- - Start JSDoc comments and consider Swagger for endpoints -->
-<!-- - add new todo operations for UI improvements (e.g. mark complete, filter/search) -->
+
+<!-- - add advanced todo operations for UI improvements (e.g. mark complete, filter/search) -->
+
 <!-- added unit testing  -->
