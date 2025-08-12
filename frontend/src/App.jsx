@@ -74,7 +74,6 @@ function App() {
       setError(err.message)
     }
   }
-
   const deleteTodo = async (id) => {
     setError('');
     try{
@@ -87,7 +86,7 @@ function App() {
       }
       await response.json()
       setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id)) // due to javascript closure behaviour, we must manually update state
-      await fetchedTodos
+      await fetchedTodos()
     }catch(err){
       setError(err.message)
     }
