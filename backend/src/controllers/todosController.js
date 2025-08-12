@@ -6,8 +6,6 @@ const {
   sendAccepted
 } = require( '../utils/responseHelpers')
 
-//this file validates each HTTP request and then calls functions from databse
-
 const {
   getAllTodos, 
   addTodo,
@@ -16,30 +14,46 @@ const {
 } = require('../data/todoStore')
 
 
-//get all todos
+/**
+ * Get all the todos for the current request
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object  
+ * @returns {void} Sends JSON array of todos to the client
+ */
 exports.getTodos =(req, res) => {
-  res.json(getAllTodos()) // parses the string into a JS object
+  const todos = getAllTodos()
+  return sendSuccess(res, todos, 'todo list fetched')
 };
 
-//add a new todo 
+
+/** 
+ * Add a todo to the todo list
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object
+ * @returns {void} Sends a JSON response with the new todo item or an error message to the client
+ */
 exports.createTodo = (req, res) => {
   const {text} = req.body
 
   if (!text || typeof text !== 'string') {
-    //the exported helper functions contains the json body of the response, allowing the validation to be more concise   
     return sendError(res, 'invalid todo text', 'something went wrong');
   }
-  
   const todo = addTodo(text);
   return sendCreated(res, todo, 'created')
 };
 
-//update a todo
+
+
+/** 
+ * Update a current todo item
+ * @param {object} req - Express request object
+ * @param {object} res - Express response object 
+ * @returns {void} Sends a JSON response of the updated todo or an error message to client.
+ */
 exports.updateTodo = (req, res) => {
-  //selecting the data from the req.body and stringed url paramter, :id
-  const todoId = parseInt(req.params.id, 10) //
-  const {text} = req.body
-  //this is the validation 
+  const todoId = parseInt(req.params.id, 10) // selecting data from the url string
+  const {text} = req.body // selecting data from the request body
+
   if(!text || typeof text !== 'string'){
     return sendError(res, 'invalid todo text', 'something went wrong')
   } 
@@ -50,7 +64,12 @@ exports.updateTodo = (req, res) => {
   return sendAccepted(res, todo, 'Accepted')
 }
 
-//delete a todo
+/**
+ * Delete a todo from todo list
+ * @param {*} req - Express request object
+ * @param {*} res - Express response object
+ * @returns Sends a JSON object or an error message to the client 
+ */
 exports.deleteTodo = (req, res) => {
   const todoId = parseInt(req.params.id, 10)
   const todo = deleteTodo(todoId)

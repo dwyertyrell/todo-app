@@ -39,9 +39,14 @@ It will be the [routes directory](../backend/src/routes/) that will handle the r
 In effect, the [index.js](../backend/src/index.js) will _delegate_ the requests to the [routes directory](../backend/src/routes/), 
 which will then _delegate_ the requests to the [controller directory](../backend/src/controllers/) - which that has direct access to the [data stored on node server](../backend/src/data/todoStore.js).
 
-_If [index.js file](../backend/src/index.js) directly called [controller functions](../backend/src/controllers/), the ability to cleanly manage routing would be lost as the codebase becomes more complex. Becoming harder to scale the application; harder to add middleware to
+_How does Express know to pass the request and response objects to the custom-made controller functions?_
+
+Due to how the routing is set up in the [entry file](../backend/src/index.js) & [route directory](../backend/src/routes/todos.js). In these files, once the router middleware tells express to use the router for an `/todos` endpoint, and an API request matches a route, Express automatically recognises the custom-made functions as controllers, and passes in the req and res objects.
+
+
+_If [index.js file](../backend/src/index.js) directly called [controller functions](../backend/src/controllers/), managing the routing would be very difficult as the codebase becomes more complex. Becoming harder to scale the application; harder to add middleware to
 a specific route group. 
-However, in this phase of development, the middlewares that could be placed in the ['/todos' endpoint routing](../backend/src/routes/todos.js), are for adding validation to the request bodies- that which the controller functions exists for_
+However, in this phase of development, the middlewares that could be placed in the ['/todos' endpoint routing](../backend/src/routes/todos.js), are for adding validation to the request bodies- that which the controller functions already exists for_
 
 ---
 ### How does the controller functions mutate the data
@@ -53,9 +58,17 @@ A[controller function](../backend/src/controllers/) pass this data into the [in-
 Checking if the [access functions](../backend/src/data/todoStore.js) returned any errors, and then stringifying the response object using `res.json()` method- so it can be sent back to the client.
 
  
+ ---
+### Error handling
+
+Express has a built-in error handling middleware, for which i used in the [entry-point file](../backend/src/index.js) to centralised all error responses. This middleware can be called simply by throwing new Error object: `throw new Error()` anywhere in an error validating `if-statement`. This will then call the response object in the error middleware to the client.
+As simple and as built-in this approach may be, I still decided to go on with [a custom response helper function](../backend/src/utils/responseHelpers.js), `sendError()`, for returning an error response to client. 
+
+This was the best possible choice to gain a greater degree of  control over the API and to have a more predictable reaction from it, after recieving a HTTP request. 
  
 
----
+
+
 <!-- 
 ## logic flow of the entry-point file in the backend: index.js
 

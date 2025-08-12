@@ -5,6 +5,13 @@ const app = express();
 const PORT = process.env.PORT || 5000
 const {sendError, sendNotFound} = require('./utils/responseHelpers')
 
+/**
+ * Entry point for the Express backend server
+ * 
+ * -Sets up CORS, JSON parsing and routes for /todos endpoints
+ * Handles 404s and centralised error responses
+ * Starts listening on the specified port  
+ */
 
 app.use(cors());
 app.use(express.json()); // parse JSON bodies for all requests
@@ -14,15 +21,15 @@ app.use('/todos', todosRouter)
 
 //404 handler for unmatched routes
 app.use((req, res) => {
-  // res.status(404).json({error: 'Not Found'})
   sendNotFound(res, 'error', 'unmatched route not found')
-
+//use a specific 404 error middleware
 });
 
 //if a request matches the valid route, but still contains an error
 app.use((err, req, res, next) => {
   console.error(err.stack) //logs where the error is in the code
   sendError(res, err.stack || 'error', err.message || 'Internal Error', err.status || 500)
+  
 })
 
 app.listen(PORT, () => {
