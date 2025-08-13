@@ -29,10 +29,10 @@ This would be seen in the calling of a fetch(), which is then used for the clien
 
 ### Modularising the backend
 
-In [phase 2](./PROJECT_PHASES.md), I wanted to focus on making the backend more modular by adding a separate directory for the [in-memory data](../backend/src/data/todoStore.js) which was initially on the [entry-point file](../backend/src/index.js). 
+In [phase 2](./PROJECT_PHASES.md), I wanted to focus on making the backend more modular by adding a separate directory for the [in-memory data](../backend/src/data/todoStore.js), which was initially on the [entry-point file](../backend/src/index.js). 
 
 Another directory was also made for [validating the API requests](../backend/src/controllers).
-At the end of phase 1, the entry-point file that was holding all the code for the backend, will be refactored 
+At the end of phase 1 the entry-point file- that was holding all the code for the backend- will be refactored 
 to only handle the traffic between the API HTTP requests and in-memory database .
 It will be the [routes directory](../backend/src/routes/) that will handle the routing of these requests- by matching URL and directing these requests to the appropiate [controller functions](../backend/src/controllers/)
 
@@ -44,18 +44,18 @@ _How does Express know to pass the request and response objects to the custom-ma
 Due to how the routing is set up in the [entry file](../backend/src/index.js) & [route directory](../backend/src/routes/todos.js). In these files, once the router middleware tells express to use the router for an `/todos` endpoint, and an API request matches a route, Express automatically recognises the custom-made functions as controllers, and passes in the req and res objects.
 
 
-_If [index.js file](../backend/src/index.js) directly called [controller functions](../backend/src/controllers/), managing the routing would be very difficult as the codebase becomes more complex. Becoming harder to scale the application; harder to add middleware to
+_If [index.js file](../backend/src/index.js) directly called [controller functions](../backend/src/controllers/), managing the routing would be very difficult as the codebase becomes more complex: becoming harder to scale the application; harder to add middleware to
 a specific route group. 
 However, in this phase of development, the middlewares that could be placed in the ['/todos' endpoint routing](../backend/src/routes/todos.js), are for adding validation to the request bodies- that which the controller functions already exists for_
 
 ---
 ### How does the controller functions mutate the data
 
-Functions that mutate the database are exported into the controllers directory, so the controllers can update the database straight after it has validated incomming client data in the HTTP request body, accordingly. 
-Once validated, the payload in the `res.body` can be used in the rest of the backend code [the in-memory data](../backend/src/data/todoStore.js); 
+Functions that mutate the database ([access functions](../backend/src/data/todoStore.js)) are exported into the `controllers/ dir`, so the controllers can update the database straight after it has validated incomming client data in the HTTP request body, accordingly. 
+Once validated, the payload in the `res.body` can be used in the rest of the backend code the [in-memory data](../backend/src/data/todoStore.js); 
 
-A[controller function](../backend/src/controllers/) pass this data into the [in-memory data storage](../backend/src/data), via the [exported access functions](../backend/src/data/todoStore.js).
-Checking if the [access functions](../backend/src/data/todoStore.js) returned any errors, and then stringifying the response object using `res.json()` method- so it can be sent back to the client.
+A [controller function](../backend/src/controllers/) pass this data into the [in-memory data storage](../backend/src/data), via the [exported access functions](../backend/src/data/todoStore.js), and then use their return to construct a response object. 
+However, it checks if the [access functions](../backend/src/data/todoStore.js) returned any errors, and then stringifying the response object using `res.json()` method- so it can be sent back to the client.
 
  
  ---
