@@ -76,5 +76,5 @@ exports.deleteTodo = (req, res) => {
   if(!todo){
     return sendNotFound(res, 'error', 'Todo not found')
   }
-  return sendAccepted(res, todo, 'Accepted')
+  return sendAccepted(res, todo, 'Deleted a todo')
 }
