@@ -4,7 +4,7 @@ const swaggerUi = require('swagger-ui-express')
 
 const cors = require('cors');
 const todosRouter = require('./routes/todos');
-const swaggerDocument = YAML.load('../../docs/swagger.yaml') 
+const swaggerDocument = YAML.load('../docs/swagger.yaml') 
 const app = express();
 const PORT = process.env.PORT || 5000
 const {sendError, sendNotFound} = require('./utils/responseHelpers')
