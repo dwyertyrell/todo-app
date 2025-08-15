@@ -23,4 +23,8 @@ try and close the containers explicitly and then restarting them using the follo
 ```
 
 
+<!-- incorrect relative path for the accessing the swagger.yaml file in index.js. 
+i went up 2 levels instead of 1. Not realising that Relative paths in Node.js are resolved from the current working directory, not the file’s location. -->
+
+<!-- the 'todos' props had value of null in the  <TodoList/>. since i changed the structure of the resoonse object, accessing the payload required a different expression. before doing this, the application  crashed. -->
 

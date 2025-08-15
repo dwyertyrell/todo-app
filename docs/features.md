@@ -1,0 +1,1 @@
+<!-- since the fetch callbacks in the <App/> returns a promise, refactor the `try` block with a promise to handle response object  -->
