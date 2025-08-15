@@ -13,7 +13,8 @@ function App() {
   const fetchedTodos = useCallback(async ()=> {
         try {
           const response = await fetch(`${API_URL}/todos`);
-          const data = await response.json();
+          const responseJSON = await response.json(); 
+          const data = responseJSON.data
           setTodos(data);
           console.log('todos updated with fresh data:', data); // Log the fresh data here
         } catch (err) {
@@ -44,7 +45,8 @@ function App() {
         throw new Error(`HTTP error status: ${response.status}`);
       }
       
-      const newTodo = await response.json()
+      const responseJSON = await response.json()
+      const newTodo = responseJSON.data
       setTodos(prevTodos => [...prevTodos, newTodo]);
       
       // Optionally refetch todos to ensure synchronization
@@ -67,12 +69,32 @@ function App() {
         throw new Error('failed to update todo item')
       };
 
-      const updatedTodo = await response.json()
+      const responseJSON = await response.json() 
+      const updatedTodo = responseJSON.data
       setTodos(prevTodos => prevTodos.map(todo => todo.id === id ? updatedTodo : todo)) // due to javascript closure behaviour, we must manually update state
       await fetchedTodos()
     }catch (err) {
       setError(err.message)
     }
+  }
+
+  const toggleCompleted = async(id) => {
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/todos/${id}/completed`, {
+        method: 'PUT'
+      })
+      if (!response.ok) throw new Error('failed to toggle completed')
+        const repsonseJSON = await response.json()
+      const updatedTodo = repsonseJSON.data
+      setTodos(
+      todos.map((prevTodo) => prevTodo.id === id ? updatedTodo : prevTodo)
+      )
+      await fetchedTodos()
+    }catch(err){
+      setError(err)
+    }    
+
   }
   const deleteTodo = async (id) => {
     setError('');
@@ -111,6 +133,7 @@ return (
       todos ={todos} 
       onUpdate = {updateTodo} 
       onDelete ={deleteTodo} 
+      onToggleCompleted = {toggleCompleted}
      />
     )}
   </div>

@@ -4,11 +4,13 @@ let id = 3;
 let todos = [
   {
     id: 1,
-    text: 'wash the bath'
+    text: 'wash the bath',
+    completed: false
   },
   {
     id: 2,
-    text: 'clean the room'
+    text: 'clean the room',
+    completed: false
   },
 ]
 
@@ -17,7 +19,7 @@ let todos = [
  * @returns {Array<Object>} Sends an array of todos to the controller 
  */
 
-function getAllTodos() {
+function getAllTodosData() {
   return todos
 };
 
@@ -27,8 +29,8 @@ function getAllTodos() {
  * @returns {object} Sends an object to the controller 
  */
 
-function addTodo(text) {
-  const todo = {id: id++, text} // since this is called in a controller function, it takes data from request body (req.body.text) and provides an id
+function addTodoData(text) {
+  const todo = {id: id++, text, completed: false} // since this is called in a controller function, it takes data from request body (req.body.text) and provides an id
   todos.push(todo)
   return todo; // addTodo() is called in a res.body
 }
@@ -50,11 +52,18 @@ function getTodoById(todoId) {
  * @returns {object| null} Sends the updated todo to the controller or sends an error
  */
 
-function updateTodo(todoId, text) {
+function updateTodoData(todoId, text) {
   const todo = getTodoById(todoId) 
   if(!todo) return null //error validating- incorrecting selecting of :id params, in controller
   todo.text = text 
   return todo  
+}
+
+function toggleCompletedData(todoId) {
+  const todo = getTodoById(todoId)
+  if (!todo) return null
+  todo.completed = !todo.completed
+  return todo
 }
 
 /**
@@ -63,7 +72,7 @@ function updateTodo(todoId, text) {
  * @returns {object|null} Sends the deleted todo back to the controller or sends error
  */
 
-function deleteTodo(todoId) {
+function deleteTodoData(todoId) {
 //find the index of the todoId in the array 
 const index = todos.findIndex(todo => todo.id ===todoId)
 if(index === -1) return null
@@ -74,4 +83,10 @@ return removed
 
 
 
-module.exports = {getAllTodos, addTodo, updateTodo, deleteTodo}
+module.exports = {
+  getAllTodosData, 
+  addTodoData, 
+  updateTodoData, 
+  deleteTodoData, 
+  toggleCompletedData
+}
