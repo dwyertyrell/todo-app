@@ -7,6 +7,8 @@ import TodoList from './components/TodoList'
 
 function App() {
   const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState('all')
+  const [sort, setSort] = useState('date')
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -29,6 +31,18 @@ function App() {
   }, [fetchedTodos]) // Remove todos dependency to prevent infinite loop
       
   
+  const filterTodos = todos.filter( todo => { 
+    if (filter === 'completed') return todo.completed
+    if (filter === 'active') return !todo.completed
+    return true 
+    
+  })
+  //renders another instance of the array on component- in order to not mutate the current array in state
+  const sortedTodos = [...filterTodos].sort((a,b) => {
+    if (sort === `date`) return new Date(a.createdAt) - new Date(b.createdAt)
+    if (sort === `alpha`) return a.text.localeCompare(b.text)
+    return 0;
+  })
 
   const addTodoItem = async (text) => {
     try {
@@ -123,17 +137,29 @@ return (
 
     <AddTodoForm 
     onAdd={addTodoItem}
-    
     />
-
-    {error && <p style = {{color:'red'}}>{error}</p>}
-
+{/* this markup couldn't render the error object from the response data  */}
+    {error && <p style = {{color:'red'}}>{error}</p>} 
+    <div>
+      <label> sort by:</label>
+      <select value={sort} onChange= {e => setSort(e.target.value)}>
+        <option value ='date'>Creation Date</option>
+        <option value='alpha'>Alphabetical</option>
+      </select>
+    </div>
+    
+    <div>
+      <button onClick= {() => setFilter('all')}>all</button>
+      <button onClick= {()=>{setFilter('completed')}}>completed</button>
+      <button onClick= {()=>{setFilter('active')}}>active</button>
+    </div>
     {loading ? <p>Loading...</p> : (
      <TodoList 
-      todos ={todos} 
+      todos ={sortedTodos} //replaced value with {filterTodos}, as {sortedTodos} is simply an instance of {filterTodos}
       onUpdate = {updateTodo} 
       onDelete ={deleteTodo} 
       onToggleCompleted = {toggleCompleted}
+      onFilterTodos = {filterTodos}
      />
     )}
   </div>

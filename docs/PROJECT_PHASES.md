@@ -75,25 +75,31 @@ _Frontend Modularization, Documentation, Advanced backend features_
 <!-- added unit testing  -->
 
 <!-- this is the complete detailed objective list phase of  4:
+
 1. User Experience & UI Enhancements
  Add confirmation dialogs/modals for delete/edit actions
  Add notification system (e.g., for successful or failed actions)
  Improve input validation (e.g., prevent empty/duplicate todos)
  Add a “Clear All” button with confirmation
+
+COMPLETED
 2. Advanced Functionality
  Add ability to mark todos as completed or active
  Implement filter controls (show: all, completed, active)
  Add sorting options (by creation date, alphabetical, etc.)
  Add support for editing todo details inline
+
 3. Frontend Features
  Add visual indicators (e.g., strikethrough for completed)
  Add responsive/mobile-friendly styling
  Add keyboard accessibility (tab/enter for actions)
  Add animations/transitions for adding/removing/editing todos
+
 4. Backend Improvements
  Refactor API responses for consistency
  Add API endpoint for bulk actions (e.g., delete all, mark all completed)
  Implement basic rate limiting or request validation for robustness
+ 
 5. Testing & Quality
  Write unit tests for frontend components (using Jest, React Testing Library)
  Write integration tests for API endpoints (using supertest, etc.)

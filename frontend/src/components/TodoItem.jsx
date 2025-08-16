@@ -13,7 +13,7 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
     }
   }
 
-
+// console.log(todo.createdAt)
 
   return (
     <li className ='todoItem' key ={todo.id}>
@@ -44,6 +44,7 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
             color: todo.completed ? 'grey': 'black'
           }}
           >{todo.text}</span> 
+          <span>{todo.createdAt}</span>
           
           
           <button onClick = {() => setIsEditing(true)}>Edit</button>

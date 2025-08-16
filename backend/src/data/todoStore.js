@@ -1,6 +1,6 @@
 
 // the in-memory storage for todos 
-let id = 3;
+let id = 5;
 let todos = [
   {
     id: 1,
@@ -10,6 +10,16 @@ let todos = [
   {
     id: 2,
     text: 'clean the room',
+    completed: false
+  },
+  {
+    id: 3,
+    text: 'sweep the stairs',
+    completed: false
+  },
+  {
+    id: 4,
+    text: 'take a walk',
     completed: false
   },
 ]
@@ -30,7 +40,7 @@ function getAllTodosData() {
  */
 
 function addTodoData(text) {
-  const todo = {id: id++, text, completed: false} // since this is called in a controller function, it takes data from request body (req.body.text) and provides an id
+  const todo = {id: id++, text, completed: false, createdAt: new Date().toISOString()} // since this is called in a controller function, it takes data from request body (req.body.text) and provides an id
   todos.push(todo)
   return todo; // addTodo() is called in a res.body
 }
