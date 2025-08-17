@@ -74,11 +74,21 @@ res.status(status).json({
 })
 }
 
+function sendBadRequest(res, data, message = 'Bad Request', status= 400) {
+  return res.status(status).json({
+    success: false,
+    data,
+    error,
+    message
+  })
+}
+
 module.exports = 
 {
   sendSuccess, 
   sendError,
   sendAccepted,
   sendCreated,
-  sendNotFound
+  sendNotFound,
+  sendBadRequest
 }

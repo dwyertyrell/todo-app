@@ -70,12 +70,18 @@ _Frontend Modularization, Documentation, Advanced backend features_
 
 - Start JSDoc comments and use Swagger for API endpoints documentation
 
-<!-- - add advanced todo operations for UI improvements (e.g. mark complete, filter/search) -->
+**Advanced Functionality**
+- add advanced todo operations for UI improvements (mark complete, filter, <!-- and search bar?-->) 
 
 <!-- added unit testing  -->
 
+
+
+
+
 <!-- this is the complete detailed objective list phase of  4:
 
+NEXT
 1. User Experience & UI Enhancements
  Add confirmation dialogs/modals for delete/edit actions
  Add notification system (e.g., for successful or failed actions)
@@ -89,18 +95,22 @@ COMPLETED
  Add sorting options (by creation date, alphabetical, etc.)
  Add support for editing todo details inline
 
+IGNORE FOR NOW- doesn't increase API complexity
 3. Frontend Features
  Add visual indicators (e.g., strikethrough for completed)
  Add responsive/mobile-friendly styling
  Add keyboard accessibility (tab/enter for actions)
  Add animations/transitions for adding/removing/editing todos
 
+NEXT
 4. Backend Improvements
- Refactor API responses for consistency
- Add API endpoint for bulk actions (e.g., delete all, mark all completed)
- Implement basic rate limiting or request validation for robustness
- 
+ Refactor API responses for consistency COMPLETED
+ Add API endpoint for bulk actions (e.g., delete all, mark all completed) IN-PROGRESS
+ Implement basic rate limiting   
+
 5. Testing & Quality
  Write unit tests for frontend components (using Jest, React Testing Library)
  Write integration tests for API endpoints (using supertest, etc.)
  Add linting and code formatting (e.g., ESLint, Prettier)-->
+
+ 

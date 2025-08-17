@@ -3,7 +3,8 @@ const {
   sendError,
   sendCreated,
   sendNotFound,
-  sendAccepted
+  sendAccepted,
+  sendBadRequest
 } = require( '../utils/responseHelpers')
 
 const {
@@ -11,7 +12,9 @@ const {
   addTodoData,
   updateTodoData,
   deleteTodoData,
-  toggleCompletedData
+  toggleCompletedData,
+  clearTodosData,
+  markAllCompletedData
 } = require('../data/todoStore')
 
 
@@ -44,8 +47,6 @@ exports.createTodoController = (req, res) => {
   return sendCreated(res, todo, 'created')
 };
 
-
-
 /** 
  * Update a current todo item
  * @param {object} req - Express request object
@@ -72,6 +73,15 @@ if (!todoId) sendError(res, 'error', 'Todo Not found')
   const todo = toggleCompletedData(todoId)
 sendAccepted(res, todo, 'Completed toggle')
 }
+
+exports.toggleAllCompletedController = (req, res) => {
+  if (!todos) {
+    return sendBadRequest(res, null, 'todos list contains no items to update')
+  }
+  markAllCompletedData()
+  sendAccepted(res, null, 'all todo items are marked completed')
+}
+
 /**
  * Delete a todo from todo list
  * @param {*} req - Express request object
@@ -85,4 +95,12 @@ exports.deleteTodoController = (req, res) => {
     return sendNotFound(res, 'error', 'Todo not found')
   }
   return sendAccepted(res, todo, 'Deleted a todo')
+}
+
+exports.deleteAllTodoController = (req, res) => {
+  if (req.body && Object.keys(req.body)){
+    sendBadRequest(res, null, 'Bulk delete does not accept a request body',)
+  }
+  clearTodosData()
+  return sendAccepted(res, null, 'all todo items are delete', 202)
 }

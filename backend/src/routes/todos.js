@@ -7,6 +7,7 @@ router.get('/', todosController.getTodosController);
 router.post('/', todosController.createTodoController);
 router.put('/:id', todosController.updateTodoController)
 router.delete('/:id', todosController.deleteTodoController)
+router.delete('/', todosController.deleteAllTodoController)
 router.put('/:id/completed', todosController.toggleCompletedController)
 
 // attaching each HTTP route to the router object, then export to be accessed by the controller dir for validation 

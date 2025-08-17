@@ -5,22 +5,26 @@ let todos = [
   {
     id: 1,
     text: 'wash the bath',
-    completed: false
+    completed: false,
+    createdAt: new Date().toISOString().slice(0, 10)
   },
   {
     id: 2,
     text: 'clean the room',
-    completed: false
+    completed: false,
+    createdAt: new Date().toISOString().slice(0, 10)
   },
   {
     id: 3,
     text: 'sweep the stairs',
-    completed: false
+    completed: false,
+    createdAt: new Date().toISOString().slice(0, 10)
   },
   {
     id: 4,
     text: 'take a walk',
-    completed: false
+    completed: false,
+    createdAt: new Date().toISOString().slice(0, 10)
   },
 ]
 
@@ -40,7 +44,7 @@ function getAllTodosData() {
  */
 
 function addTodoData(text) {
-  const todo = {id: id++, text, completed: false, createdAt: new Date().toISOString()} // since this is called in a controller function, it takes data from request body (req.body.text) and provides an id
+  const todo = {id: id++, text, completed: false, createdAt: new Date().toISOString().slice(0, 10)} // since this is called in a controller function, it takes data from request body (req.body.text) and provides an id
   todos.push(todo)
   return todo; // addTodo() is called in a res.body
 }
@@ -76,6 +80,11 @@ function toggleCompletedData(todoId) {
   return todo
 }
 
+//bulk action for marking all todo items as completed
+function markAllCompletedData() {
+  todos.completed = true
+}
+
 /**
  * Delete a todo item 
  * @param {number} todoId 
@@ -91,6 +100,10 @@ const removed = todos.splice(index, 1)[0]
 return removed
 } 
 
+// bulk action for deleting the whole list
+function clearTodosData() {
+  todos.length = 0
+}
 
 
 module.exports = {
@@ -98,5 +111,7 @@ module.exports = {
   addTodoData, 
   updateTodoData, 
   deleteTodoData, 
-  toggleCompletedData
+  toggleCompletedData,
+  clearTodosData,
+  markAllCompletedData
 }
