@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Button from './common/button'
+import Button from '../atomic/button'
 
 function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +27,7 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
           />
            <Button variant='add' type ='submit'>Save</Button>
            <Button 
-            variant='edit'
+            variant='delete'
             type ='button' 
             onClick ={() => setIsEditing(false)}
             >cancel</Button> 

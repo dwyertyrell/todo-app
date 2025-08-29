@@ -73,11 +73,13 @@ _Frontend Modularization, Documentation, Advanced backend features_
 **Advanced Functionality**
 - add advanced todo operations for UI improvements (mark complete, filter, <!-- and search bar?-->) 
 
+**Atomic components**
+- add atomic components for buttons, input elements, text, heading, labels,
+and containers. Then add Storybook- a UI style guide for your website for easy visualisation for other developers
+
+-REFACTOR the project structure to intentionally group the child react components in a `molecule` and `organism` folder- to better clarify their purpose and relation to the atomic components in `/atomic` folder. 
+
 <!-- added unit testing  -->
-
-
-
-
 
 <!-- this is the complete detailed objective list phase of  4:
 

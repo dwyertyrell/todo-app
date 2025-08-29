@@ -45,7 +45,11 @@ return (
 )}  
 
 export default Button
-
+/*
+  static styling- therefore can be declared outside the scope of the component 
+  although the dynamic styling of this component, is directly placed inside. 
+  that is the switch statement that depends on the variant prop. 
+*/
 const styles = {
   base:{
     padding: '8px 16px',
@@ -65,10 +69,11 @@ const styles = {
   delete:{
     background: "linear-gradient(90deg, #ff512f 0%, #dd2476 100%)",
   },
-  save: {
-    backgroundColor: 'blue'
-  },
+  
 }
  styles.add = {
    ...styles.edit
+  }
+  styles.save = {
+    backgroundColor: 'blue'
   }

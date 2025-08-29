@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import './App.css'
-import AddTodoForm from './components/AddTodoForm'
-import TodoList from './components/TodoList'
-import Button from './components/common/button';
+import AddTodoForm from './components/molecules/addTodoForm'
+import TodoList from './components/organisms/todoList'
+import Button from './components/atomic/button';
+import Text from './components/atomic/text';
+import Label from './components/atomic/label';
 //reads the backend API URL from an environment variable
   const API_URL = import.meta.env.VITE_APP_API_URL; 
 
@@ -134,7 +136,7 @@ function App() {
 return (
 <>
   <div className='container'>
-    <h1> To Do List</h1>
+    <Text size='lg' >To Do List</Text>
 
     <AddTodoForm 
     onAdd={addTodoItem}
@@ -142,7 +144,7 @@ return (
 {/* this markup couldn't render the error object from the response data  */}
     {error && <p style = {{color:'red'}}>{error}</p>} 
     <div>
-      <label> sort by:</label>
+      <Label> sort by:</Label>
       <select value={sort} onChange= {e => setSort(e.target.value)}>
         <option value ='date'>Creation Date</option>
         <option value='alpha'>Alphabetical</option>
