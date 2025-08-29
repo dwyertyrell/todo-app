@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import './App.css'
 import AddTodoForm from './components/AddTodoForm'
 import TodoList from './components/TodoList'
+import Button from './components/common/button';
 //reads the backend API URL from an environment variable
   const API_URL = import.meta.env.VITE_APP_API_URL; 
 
@@ -149,9 +150,9 @@ return (
     </div>
     
     <div>
-      <button onClick= {() => setFilter('all')}>all</button>
-      <button onClick= {()=>{setFilter('completed')}}>completed</button>
-      <button onClick= {()=>{setFilter('active')}}>active</button>
+      <Button onClick= {() => setFilter('all')}>all</Button>
+      <Button onClick= {()=>{setFilter('completed')}}>completed</Button>
+      <Button onClick= {()=>{setFilter('active')}}>active</Button>
     </div>
     {loading ? <p>Loading...</p> : (
      <TodoList 

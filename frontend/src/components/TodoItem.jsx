@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import Button from './common/button'
 
 function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,11 +25,12 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
           placeholder={todo.text}
           onChange = {e => setText(e.target.value)}
           />
-           <button type ='submit'>Save</button>
-           <button 
+           <Button variant='add' type ='submit'>Save</Button>
+           <Button 
+            variant='edit'
             type ='button' 
             onClick ={() => setIsEditing(false)}
-            >cancel</button> 
+            >cancel</Button> 
         </form>
       ) : (
         <div  style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
@@ -47,8 +49,8 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted}) {
           <span>{todo.createdAt}</span>
           
           
-          <button onClick = {() => setIsEditing(true)}>Edit</button>
-          <button onClick ={()=> onDelete(todo.id)}>Delete</button>
+          <Button variant = 'edit' onClick = {() => setIsEditing(true)}>Edit</Button>
+          <Button variant = 'delete' onClick ={()=> onDelete(todo.id)}>Delete</Button>
         </div>
       )}
     

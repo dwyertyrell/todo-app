@@ -1,5 +1,5 @@
 import React from 'react'
-import TodoItem from './TodoItem'
+import TodoItem from './todoItem'
 
 function TodoList ({todos, onUpdate, onDelete, onToggleCompleted}) {
   // const safeTodos = Array.isArray(todos) ? todos : []

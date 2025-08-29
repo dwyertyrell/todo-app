@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import Button from "./common/button";
 
 function AddTodoForm ({onAdd}) {
   const [text, setText] = useState('');
@@ -18,7 +18,7 @@ const handleSubmit = (e) => {
         onChange = {e => setText(e.target.value)}
         placeholder= 'add a new task'
       ></input>
-      <button type = 'submit' >Add</button>
+      <Button variant='add' type = 'submit' >Add</Button>
     </form>
   )
 }
