@@ -33,13 +33,14 @@ function App() {
     fetchedTodos()
   }, [fetchedTodos]) // Remove todos dependency to prevent infinite loop
       
-  
+  // filter the todo list
   const filterTodos = todos.filter( todo => { 
     if (filter === 'completed') return todo.completed
     if (filter === 'active') return !todo.completed
     return true 
     
   })
+
   //renders another instance of the array on component- in order to not mutate the current array in state
   const sortedTodos = [...filterTodos].sort((a,b) => {
     if (sort === `date`) return new Date(a.createdAt) - new Date(b.createdAt)
@@ -47,6 +48,7 @@ function App() {
     return 0;
   })
 
+  // add a todo item to list
   const addTodoItem = async (text) => {
     try {
       const response = await fetch(`${API_URL}/todos`, {
@@ -72,7 +74,7 @@ function App() {
       console.error('failed to create a todo:', err.message);
     }
   }
-
+  //update the text of a todo item
   const updateTodo = async (id, text) => {
     setError('');
     try {
@@ -94,7 +96,7 @@ function App() {
       setError(err.message)
     }
   }
-
+  // toggle a todo item  
   const toggleCompleted = async(id) => {
     setError('')
     try {
@@ -111,8 +113,8 @@ function App() {
     }catch(err){
       setError(err)
     }    
-
   }
+  // delete a todo item
   const deleteTodo = async (id) => {
     setError('');
     try{
@@ -131,7 +133,42 @@ function App() {
     }
   }
 
+  // delete all the todo items
+  const deleteAllTodo = async () => {
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/todos`, {
+        method: 'DELETE',
+      });
 
+      if(!response.ok) throw new Error('failed to delete the todo list')
+      
+      await response.json()
+      setTodos([])
+      console.log('bulk delete called')
+      await fetchedTodos()
+    } catch(err) {
+      setError(err.message)
+      console.error( `request failed:`, err.message)
+    }
+  }
+
+  const completeAllTodo = async () => {
+    setError('')
+    try {
+      const response = await fetch(`${API_URL}/todos`, {
+        method: 'PUT'
+      })
+      if(!response.ok) throw new Error('failed to complete all todos')
+      
+      await response.json()
+      fetchedTodos()
+      // console.log(response)
+
+    } catch(err) {
+      setError(err.message)
+    }
+  }
 
 return (
 <>
@@ -151,11 +188,21 @@ return (
       </select>
     </div>
     
+    {/* modularize this into as a molecule compoenent */}
     <div>
       <Button onClick= {() => setFilter('all')}>all</Button>
       <Button onClick= {()=>{setFilter('completed')}}>completed</Button>
       <Button onClick= {()=>{setFilter('active')}}>active</Button>
     </div>
+
+{/* modularize this as a molecule component   */}
+    <div>
+      <Button variant='delete' onClick= {()=> deleteAllTodo()}>Delete All</Button>
+      <Button onClick={()=> completeAllTodo()}> Complete all</Button>
+
+    </div>
+
+      
     {loading ? <p>Loading...</p> : (
      <TodoList 
       todos ={sortedTodos} //replaced value with {filterTodos}, as {sortedTodos} is simply an instance of {filterTodos}

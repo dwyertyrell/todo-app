@@ -75,11 +75,11 @@ sendAccepted(res, todo, 'Completed toggle')
 }
 
 exports.toggleAllCompletedController = (req, res) => {
-  if (!todos) {
-    return sendBadRequest(res, null, 'todos list contains no items to update')
-  }
+  // if (!todos) {
+  //   return sendBadRequest(res, null, 'todos list contains no items to update')
+  // }
   markAllCompletedData()
-  sendAccepted(res, null, 'all todo items are marked completed')
+  return sendAccepted(res, null, 'all todo items are marked completed')
 }
 
 /**
@@ -101,6 +101,11 @@ exports.deleteAllTodoController = (req, res) => {
   if (req.body && Object.keys(req.body)){
     sendBadRequest(res, null, 'Bulk delete does not accept a request body',)
   }
-  clearTodosData()
+   clearTodosData()
+  
+  //trying to validate the return data of the access function, when the if statement is triggered
+  // if (clearTodosData() === ) { 
+  // sendBadRequest(res, null, 'there are no todo items to delete')
+  // }
   return sendAccepted(res, null, 'all todo items are delete', 202)
 }

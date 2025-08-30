@@ -82,7 +82,7 @@ function toggleCompletedData(todoId) {
 
 //bulk action for marking all todo items as completed
 function markAllCompletedData() {
-  todos.completed = true
+  return todos.forEach(todo => todo.completed = true) 
 }
 
 /**
@@ -102,6 +102,9 @@ return removed
 
 // bulk action for deleting the whole list
 function clearTodosData() {
+  // if(!todos) {
+  //   return undefined
+  // }
   todos.length = 0
 }
 
