@@ -101,7 +101,10 @@ function App() {
     setError('')
     try {
       const response = await fetch(`${API_URL}/todos/${id}/completed`, {
-        method: 'PUT'
+        method: 'PUT',
+        headers: {
+          'Content Type': 'application/json'
+        }
       })
       if (!response.ok) throw new Error('failed to toggle completed')
         const repsonseJSON = await response.json()
@@ -120,6 +123,9 @@ function App() {
     try{
       const response = await fetch(`${API_URL}/todos/${id}`, {
         method: 'DELETE',
+        headers: {
+          'Content Type': 'application/json'
+        }
       });
 
       if(!response.ok){
@@ -134,11 +140,14 @@ function App() {
   }
 
   // delete all the todo items
-  const deleteAllTodo = async () => {
+  const deleteAllTodos = async () => {
     setError('')
     try {
       const response = await fetch(`${API_URL}/todos`, {
         method: 'DELETE',
+        headers: {
+          'Content Type': 'application/json'
+        }
       });
 
       if(!response.ok) throw new Error('failed to delete the todo list')
@@ -153,16 +162,19 @@ function App() {
     }
   }
 
-  const completeAllTodo = async () => {
+  const completeAllTodos = async () => {
     setError('')
     try {
       const response = await fetch(`${API_URL}/todos`, {
-        method: 'PUT'
+        method: 'PUT',
+        headers: {
+          'Content Type': 'application/json'
+        },
       })
       if(!response.ok) throw new Error('failed to complete all todos')
       
       await response.json()
-      fetchedTodos()
+      await fetchedTodos()
       // console.log(response)
 
     } catch(err) {
@@ -197,8 +209,8 @@ return (
 
 {/* modularize this as a molecule component   */}
     <div>
-      <Button variant='delete' onClick= {()=> deleteAllTodo()}>Delete All</Button>
-      <Button onClick={()=> completeAllTodo()}> Complete all</Button>
+      <Button variant='delete' onClick= {()=> deleteAllTodos()}>Delete All</Button>
+      <Button onClick={()=> completeAllTodos()}> Complete all</Button>
 
     </div>
 
