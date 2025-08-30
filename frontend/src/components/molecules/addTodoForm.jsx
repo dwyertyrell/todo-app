@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Button from "../atomic/button";
+import Input from "../atomic/input";
 
 function AddTodoForm ({onAdd}) {
   const [text, setText] = useState('');
@@ -13,11 +14,11 @@ const handleSubmit = (e) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
+      <Input
         value = {text}
         onChange = {e => setText(e.target.value)}
         placeholder= 'add a new task'
-      ></input>
+      ></Input>
       <Button variant='add' type = 'submit' >Add</Button>
     </form>
   )

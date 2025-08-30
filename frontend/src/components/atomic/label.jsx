@@ -14,5 +14,4 @@ const styles = {
   base: {
     color:'blue'
   }
-
 }
