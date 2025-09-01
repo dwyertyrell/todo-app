@@ -2,15 +2,23 @@ import React, {useState} from "react";
 import Button from "../atomic/button";
 import Input from "../atomic/input";
 
-function AddTodoForm ({onAdd}) {
+function AddTodoForm ({onAdd, notify, todos}) {
   const [text, setText] = useState('');
 
-const handleSubmit = (e) => {
-   e.preventDefault(); // Prevent form submission reload
-   if (text.trim() === '') return; // Don't add empty todos and exit this function
-  onAdd(text) //passing the user input into <App/>
-  setText('')
-}
+  const trimmedTexted = text.trim()
+    
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form submission reload
+    if (trimmedTexted === '') {
+      return notify('todo item cannot be empty', 'error')
+    }
+    if ( todos.some((todo)=> todo.text === trimmedTexted)) {
+      return notify('duplicated todo items are not allowed', 'error')
+    }
+    onAdd(text) //passing the user input into <App/>
+    setText('')
+    notify('todo item added to list!', 'success')
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -23,5 +31,4 @@ const handleSubmit = (e) => {
     </form>
   )
 }
-
 export default AddTodoForm 

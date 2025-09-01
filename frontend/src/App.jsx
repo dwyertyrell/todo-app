@@ -4,7 +4,10 @@ import AddTodoForm from './components/molecules/addTodoForm'
 import TodoList from './components/organisms/todoList'
 import Button from './components/atomic/button';
 import Text from './components/atomic/text';
-import Label from './components/atomic/label';
+import SortTodoList from './components/molecules/sortTodoList';
+import BulkActions from './components/molecules/bulkActions';
+import Notification from './components/atomic/notification';
+import {ClipLoader} from 'react-spinners'
 //reads the backend API URL from an environment variable
   const API_URL = import.meta.env.VITE_APP_API_URL; 
 
@@ -14,6 +17,7 @@ function App() {
   const [sort, setSort] = useState('date')
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [notification, setNotification] = useState({message:'', type: ''})
 
   const fetchedTodos = useCallback(async ()=> {
         try {
@@ -40,6 +44,11 @@ function App() {
     return true 
     
   })
+
+  const notify = (msg, type = 'info') => {
+    setNotification({message: msg, type: type});
+    // setTimeout(() => setNotification({message: '', type: ''}), 3000)
+  }
 
   //renders another instance of the array on component- in order to not mutate the current array in state
   const sortedTodos = [...filterTodos].sort((a,b) => {
@@ -103,7 +112,7 @@ function App() {
       const response = await fetch(`${API_URL}/todos/${id}/completed`, {
         method: 'PUT',
         headers: {
-          'Content Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       })
       if (!response.ok) throw new Error('failed to toggle completed')
@@ -124,7 +133,7 @@ function App() {
       const response = await fetch(`${API_URL}/todos/${id}`, {
         method: 'DELETE',
         headers: {
-          'Content Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       });
 
@@ -146,7 +155,7 @@ function App() {
       const response = await fetch(`${API_URL}/todos`, {
         method: 'DELETE',
         headers: {
-          'Content Type': 'application/json'
+          'Content-Type': 'application/json'
         }
       });
 
@@ -168,7 +177,7 @@ function App() {
       const response = await fetch(`${API_URL}/todos`, {
         method: 'PUT',
         headers: {
-          'Content Type': 'application/json'
+          'Content-Type': 'application/json'
         },
       })
       if(!response.ok) throw new Error('failed to complete all todos')
@@ -184,51 +193,49 @@ function App() {
 
 return (
 <>
-  <div className='container'>
-    <Text size='lg' >To Do List</Text>
+  <Notification //a global UI component; must only be controlled through central component
+    message={notification.message}
+    type={notification.type}
+    onClose= {()=> setNotification({message:'', type:''})}
+    />
 
+  <div className='container'>
+
+    <Text size='lg' >To Do List</Text>
+    
     <AddTodoForm 
     onAdd={addTodoItem}
+    notify={notify}
+    todos={todos}
     />
-{/* this markup couldn't render the error object from the response data  */}
-    {error && <p style = {{color:'red'}}>{error}</p>} 
-    <div>
-      <Label> sort by:</Label>
-      <select value={sort} onChange= {e => setSort(e.target.value)}>
-        <option value ='date'>Creation Date</option>
-        <option value='alpha'>Alphabetical</option>
-      </select>
-    </div>
+
+  {error && <p style = {{color:'red'}}>{error}</p>} 
     
-    {/* modularize this into as a molecule compoenent */}
-    <div>
-      <Button onClick= {() => setFilter('all')}>all</Button>
-      <Button onClick= {()=>{setFilter('completed')}}>completed</Button>
-      <Button onClick= {()=>{setFilter('active')}}>active</Button>
-    </div>
+    
+    {/* modularized the sort functionality as a molecule compoenent */}
+  <SortTodoList setFilter={setFilter} sort={sort} setSort={setSort}/>
 
-{/* modularize this as a molecule component   */}
-    <div>
-      <Button variant='delete' onClick= {()=> deleteAllTodos()}>Delete All</Button>
-      <Button onClick={()=> completeAllTodos()}> Complete all</Button>
-
-    </div>
+{/* modularized the buld API request actions as a molecule component   */}
+  <BulkActions 
+    deleteAllTodos={deleteAllTodos} 
+    completeAllTodos={completeAllTodos}
+  />
 
       
-    {loading ? <p>Loading...</p> : (
+    {loading ? <ClipLoader/> : (
      <TodoList 
       todos ={sortedTodos} //replaced value with {filterTodos}, as {sortedTodos} is simply an instance of {filterTodos}
       onUpdate = {updateTodo} 
       onDelete ={deleteTodo} 
       onToggleCompleted = {toggleCompleted}
       onFilterTodos = {filterTodos}
+      notify={notify}
      />
     )}
   </div>
   
 </>
-
-  )
+)
 }
 
 export default App
