@@ -71,48 +71,47 @@ _Frontend Modularization, Documentation, Advanced backend features_
 - Start JSDoc comments and use Swagger for API endpoints documentation
 
 **Advanced Functionality**
-- add advanced todo operations for UI improvements (mark complete, filter, <!-- and search bar?-->) 
+  - Add ability to mark todos as completed or active 
+  - Implement filter controls (show: all, completed, active) 
+  - Add sorting options (by creation date, alphabetical, etc.) 
+  - Add support for editing todo details inline 
 
 **Atomic components**
 - add atomic components for buttons, input elements, text, heading, labels,
-and containers. Then add Storybook- a UI style guide for your website for easy visualisation for other developers
+and containers. 
+- REFACTORED the modularized project structure to intentionally group the child react components in a [molecule](../frontend/src/components/molecules/) and [organism](../frontend/src/components/organisms/) folder- to better clarify their purpose and relation to the [atomic compoenents](../frontend/src/components/atomic). 
+<!-- - add Storybook- a UI style guide for your website for easy visualisation for other developers -->
 
--REFACTOR the project structure to intentionally group the child react components in a `molecule` and `organism` folder- to better clarify their purpose and relation to the atomic components in `/atomic` folder. 
+**User Experience & UI Enhancements**
+  - Add confirmation [dialogs](../frontend/src/components/atomic/notification.jsx)/[modals](../frontend/src/components/atomic/modal.jsx) for delete/edit actions  
+  - Add notification system (e.g., for successful or failed actions) as a global UI component in [central component](../frontend/src/app.jsx) via the `notify()` callback
+  - Improve input validation (e.g., prevent empty/duplicate todos in form submission of [addTodoForm.jsx](../frontend/src/components/molecules/addTodoForm.jsx)) 
+  - Add a “Clear All” button with confirmation 
+  
+
+**Backend Improvements**
+  -  Add API endpoint for bulk actions (e.g., delete all, mark all completed) 
+  -  Refactor API responses for consistency 
+  <!-- -  Implement basic rate limiting ?? -->
+
 
 <!-- added unit testing  -->
 
 <!-- this is the complete detailed objective list phase of  4:
 
-NEXT
-1. User Experience & UI Enhancements
- Add confirmation dialogs/modals for delete/edit actions
- Add notification system (e.g., for successful or failed actions)
- Improve input validation (e.g., prevent empty/duplicate todos)
- Add a “Clear All” button with confirmation
+5. Testing & Quality
+ Write unit tests for frontend components (using Jest, React Testing Library)
+ Write integration tests for API endpoints (using supertest, etc.)
+ Add linting and code formatting (e.g., ESLint, Prettier)
 
-COMPLETED
-2. Advanced Functionality
- Add ability to mark todos as completed or active
- Implement filter controls (show: all, completed, active)
- Add sorting options (by creation date, alphabetical, etc.)
- Add support for editing todo details inline
-
+ 
 IGNORE FOR NOW- doesn't increase API complexity
 3. Frontend Features
  Add visual indicators (e.g., strikethrough for completed)
  Add responsive/mobile-friendly styling
  Add keyboard accessibility (tab/enter for actions)
  Add animations/transitions for adding/removing/editing todos
+ -->
 
-NEXT
-4. Backend Improvements
- Refactor API responses for consistency COMPLETED
- Add API endpoint for bulk actions (e.g., delete all, mark all completed) IN-PROGRESS
- Implement basic rate limiting   
 
-5. Testing & Quality
- Write unit tests for frontend components (using Jest, React Testing Library)
- Write integration tests for API endpoints (using supertest, etc.)
- Add linting and code formatting (e.g., ESLint, Prettier)-->
-
- 
+<!-- after creating user accounts and auth, allow users to re-order items in their custom lists  -->
