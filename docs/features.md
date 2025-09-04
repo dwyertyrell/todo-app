@@ -1,5 +1,3 @@
-<!-- since the fetch callbacks in the <App/> returns a promise, refactor the `try` block with a promise to handle response object  -->
-
 # Feature Documentation
   _this covers the features of the Todo-app project, including their purpose and usuage instructions_
 
@@ -77,5 +75,11 @@
 - **Testing:**
   - mark a todo as 'completed' as see if status changes are reflected
 
+
+
   ### Persistent Storage
   
+  ### Bulk Actions
+
+  ### UI Enhancements
+  <!-- confirmation dialoags; notification system; input validation; filtering/sorting; (responsive design?) -->
