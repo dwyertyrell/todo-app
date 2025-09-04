@@ -209,7 +209,7 @@ return (
     todos={todos}
     />
 
-  {error && <p style = {{color:'red'}}>{error}</p>} 
+  {error && <Text style = {{color:'red'}}>{error}</Text>} 
     
     
     {/* modularized the sort functionality as a molecule compoenent */}
