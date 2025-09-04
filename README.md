@@ -6,13 +6,14 @@ A full stack Todo App built with **React.js** and **Node.js/Express.js**, and co
 
 ## Table of Contents
 
-- [featues]()
-- [Architecture]()
-- [API References]()
-- [Getting Started]()
-- [Project Phases]()
-- [Troubleshooting]()
-- [More Documentation]()
+- [Featues](#features)
+- [Architecture](#architecture)
+- [API References](#api-references)
+- [Getting Started](#getting-started)
+- [Project Phases](#project-phases)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
+- [More Documentation](#more-documentaion)
 
 ---
 
@@ -102,6 +103,7 @@ docker compose up --buid
 ---
 
 ## Project Phases
+Development tracked in phases:
 
 1. **Setup and Basic CRUD**: Initial structure, In-memory storage, CRUD operations.
 
@@ -116,23 +118,41 @@ Full Breakdown: [docs/PROJECT_PHASES](./docs/PROJECT_PHASES.md)
 
 
 ---
-
-## Troubleshooting
-
+## Testing
 
 
 ---
 
+## Troubleshooting
+
+- Always start the backend before the frontend, for in-memory storage.
+- Docker: run `docker compose up` in root. to rebuild containers, run `docker compose down` and `docker compose up --build`.
+For more common errors and solutions: see [troubleshooting](./docs/troubleshooting.md).
+
+---
+
 ## More Documentaion
+
+Detailed guides and references are in the `docs/` folder:
+
+- [README.md](./docs/README.md)
+- [api.md](./docs/api.md)
+- [architecture.md](./docs/architecture.md)
+- [features.md](./docs/features.md)
+- [PROJECT PHASES.md](./docs/PROJECT_PHASES.md)
+- [getting started.md](./docs/getting-started.md)
+<!-- -[testing.md](./docs/testing.md) -->
+<!-- - [bugLog.md](./docs/bugLog.md) -->
 
 
 -----
 
 ## Contribution 
 
+Feel free to open issues or pull requests! For any questions, see documentation or message the repo owner.
 
 ---
 
 ## License
 
-
+MIT
