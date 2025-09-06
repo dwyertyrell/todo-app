@@ -1,0 +1,27 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "A full stack Todo App built with **React.js** and **Node.js/Express.js**, and containerized with **Docker**. This is a mono-repo- building the client and the server side of the codebase- showing efficient modularization and good documentation.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dwyertyrell/todo-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dwyertyrell/todo-app/issues"
+  },
+  "homepage": "https://github.com/dwyertyrell/todo-app#readme",
+  "devDependencies": {
+    "jest": "^30.1.3"
+  }
+}
