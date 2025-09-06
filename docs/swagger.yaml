@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API documentation for the Todo backend service.
 servers:
-  -url: http://localhost:5000
+  - url: http://localhost:5000
 paths:
   /todos:
     get:
@@ -17,22 +17,22 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Todo'
+                  $ref:'#/components/schemas/Todo'
     post:
       summary: Create a new todo item  
       requestBody: 
-        required: ture
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schema/TodoInput'
+              $ref:'#/components/schemas/TodoInput'
       responses:
         '201':
           description: Todo created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Todo'
+                $ref:'#/components/schemas/Todo'
 /todos/{id}:
   put:
     summary: Update a todo
@@ -47,14 +47,14 @@ paths:
       content:  
         application/json:
           schema:
-            $ref: '#/components/schemas/TodoInput'
+            $ref:'#/components/schemas/TodoInput'
     responses:
-    '202':
-    description: Updated a todo
-    content:
-      application/json:
-        schema:
-          $ref: '#/components/schemas/Todo'
+      '202':
+        description: Updated a todo
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
   delete:
   summary: Delete a todo
   parameters: 
@@ -69,20 +69,30 @@ paths:
       content:
         application/json:
           schema:
-            $ref: '#/comnponents/schema/Todo'
+            $ref:'#/components/schemas/Todo'
 components:
   schemas:
     Todo:
       type: object
       properties:
         id:
-          type: string
+          type: integer
         text:
           type: string
+        completed:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - text
+        - completed
+        - createdAt
     TodoInput:
       type: object
       properties:
         text:
           type: string
-      required: 
+      required:
         - text
