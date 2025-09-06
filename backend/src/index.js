@@ -1,10 +1,10 @@
 const express = require('express');
-const YAML = require('yamljs')
-const swaggerUi = require('swagger-ui-express')
+// const YAML = require('yamljs')
+// const swaggerUi = require('swagger-ui-express')
 
 const cors = require('cors');
 const todosRouter = require('./routes/todos');
-const swaggerDocument = YAML.load('../docs/swagger.yaml') 
+// const swaggerDocument = YAML.load('../docs/swagger.yaml') 
 const app = express();
 const PORT = process.env.PORT || 5000
 const {sendError, sendNotFound} = require('./utils/responseHelpers')
@@ -24,7 +24,7 @@ app.use(express.json()); // parse JSON bodies for all requests
 app.use('/todos', todosRouter) 
 
 //setting up a route in the express app to view the interactive swagger UI document on client side
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 //404 handler for unmatched routes
 app.use((req, res) => {
