@@ -40,8 +40,11 @@ exports.getTodosController =(req, res) => {
 exports.createTodoController = (req, res) => {
   const {text} = req.body
 
-  if (!text || typeof text !== 'string') {
-    return sendError(res, 'invalid todo text', 'something went wrong');
+  if (!text ) {
+    return sendError(res, 'todo item cannot be empty', 'something went wrong');
+  }
+  if (typeof text !== "string" || /^\d+$/.test(text)) {
+    return sendError(res, 'todo item can only be alphabetical', 'something went wrong')
   }
   const todo = addTodoData(text);
   return sendCreated(res, todo, 'created')
