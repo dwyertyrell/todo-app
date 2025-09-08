@@ -15,7 +15,11 @@ function AddTodoForm ({onAdd, notify, todos}) {
     if ( todos.some((todo)=> todo.text === trimmedTexted)) {
       return notify('duplicated todo items are not allowed', 'error')
     }
-    onAdd(text) //passing the user input into <App/>
+    
+    if (typeof trimmedTexted !== "string" || /^\d+$/.test(trimmedTexted)) {
+      return notify('text must only be words and/or letters', 'error')
+    }
+    onAdd(trimmedTexted) //passing the user input into <App/>
     setText('')
     notify('todo item added to list!', 'success')
   }
