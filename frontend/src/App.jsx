@@ -47,7 +47,7 @@ function App() {
 
   const notify = (msg, type = 'info') => {
     setNotification({message: msg, type: type});
-    // setTimeout(() => setNotification({message: '', type: ''}), 3000)
+    setTimeout(() => setNotification({message: '', type: ''}), 3000)
   }
 
   //renders another instance of the array on component- in order to not mutate the current array in state
