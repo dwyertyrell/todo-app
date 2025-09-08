@@ -8,6 +8,7 @@ A full stack Todo App built with **React.js** and **Node.js/Express.js**, and co
 
 - [Featues](#features)
 - [Architecture](#architecture)
+- [Screenshots](#screenshot)
 - [API References](#api-references)
 - [Getting Started](#getting-started)
 - [Project Phases](#project-phases)
@@ -31,7 +32,12 @@ Core features include:
 See [docs/features.md](./docs/features.md) for full details.
 
 ---
+## Screenshot
 
+**main page**:
+
+![main page](./assests/phase_4.png)
+---
 ## Architecture
 
 ### Overview 
