@@ -2,11 +2,11 @@ import { useState, useEffect, useCallback } from 'react'
 import './App.css'
 import AddTodoForm from './components/molecules/addTodoForm'
 import TodoList from './components/organisms/todoList'
-import Button from './components/atomic/button';
+import Button from './components/atomic/button/button';
 import Text from './components/atomic/text';
 import SortTodoList from './components/molecules/sortTodoList';
 import BulkActions from './components/molecules/bulkActions';
-import Notification from './components/atomic/notification';
+import Notification from './components/atomic/notification/notification';
 import {ClipLoader} from 'react-spinners'
 //reads the backend API URL from an environment variable
   const API_URL = import.meta.env.VITE_APP_API_URL; 

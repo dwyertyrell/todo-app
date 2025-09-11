@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./button";
+import Button from "../button/button";
 
 const Notification = ({message, type, onClose}) => {
 
@@ -14,4 +14,3 @@ const Notification = ({message, type, onClose}) => {
 }
 export default Notification 
 
-// className='notification-btn' 

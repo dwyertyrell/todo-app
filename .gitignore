@@ -7,23 +7,27 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+#root 
 /node_modules
 /package-lock.json
+/babel.config.js
+/jest.config.cjs
 
-frontend/node_modules
+#backend
 backend/node_modules
+backend/package-lock.json
+backend/dist
+backend/.env
+
+# frontend
+frontend/node_modules
+frontend/package-lock.json
+frontend/dist
+frontend/.env
+
+*.local
 dist
 dist-ssr
-*.local
-
-frontend/package-lock.json
-backend/package-lock.json
-
-frontend/dist
-backend/dist
-
-frontend/.env
-backend/.env
 
 # Editor directories and files
 .vscode/*

@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../atomic/button";
+import Button from "../atomic/button/button";
 import Label from "../atomic/label";
 import Modal from "../atomic/modal";
 
