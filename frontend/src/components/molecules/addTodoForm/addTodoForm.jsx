@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Button from "../atomic/button/button";
+import Button from "../button/button";
 import Input from "../atomic/input";
 
 function AddTodoForm ({onAdd, notify, todos}) {

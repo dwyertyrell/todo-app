@@ -24,7 +24,6 @@ describe('AddTodoForm client-side validation', () => {
   test('should add valid todo', async () => {
     await userEvent.type(input, 'walk dog home')
     await userEvent.click(button)
-    // addTodoForm.debug()
     expect(onAdd).toHaveBeenCalledWith('walk dog home')
     expect(notify).toHaveBeenCalledWith('todo item added to list!', 'success')
   })
