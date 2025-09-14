@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "./button/button";
-import Text from "./text";
+import Button from "../button/button";
+import Text from "../text/text";
 //props passed into this modal is entirely passed on which parent component the instance of <Modal> is being created with
 const Modal = ({isOpen, onConfirm, onCancel, title, message}) => {
 

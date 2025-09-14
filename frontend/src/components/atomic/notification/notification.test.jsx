@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Notification from "./notification";
 import '@testing-library/jest-dom'
 

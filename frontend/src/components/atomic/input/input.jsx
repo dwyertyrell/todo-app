@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Input = ({...props}) => {
   
   return <input style={styles.base} {...props} ></input>
