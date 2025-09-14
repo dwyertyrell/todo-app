@@ -1,11 +1,11 @@
 // client-side layer unit testing
 import React from "react";
 import '@testing-library/jest-dom'
-import AddTodoForm from "../src/components/molecules/addTodoForm";
+import AddTodoForm from "./addTodoForm";
 import userEvent from "@testing-library/user-event";
 import { render } from "@testing-library/react";
 
-describe('AddTodoForm client-side validation', () => {
+describe('AddTodoForm Component', () => {
     
     let onAdd;
     let notify;
