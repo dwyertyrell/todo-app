@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../atomic/button/button";
-import Label from "../atomic/label";
-import Modal from "../atomic/modal";
+import Label from "../atomic/label/label";
+import Modal from "../atomic/modal/modal";
 
 const SortTodoList = ({setFilter, sort, setSort}) => {
 

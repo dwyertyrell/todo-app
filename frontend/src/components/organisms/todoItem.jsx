@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Button from '../atomic/button/button'
-import Modal from '../atomic/modal';
+import Modal from '../atomic/modal/modal';
 
 
 function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted, notify}) {

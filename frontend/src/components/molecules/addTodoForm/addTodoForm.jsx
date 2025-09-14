@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Button from "../button/button";
-import Input from "../atomic/input";
+import Button from "../../atomic/button/button";
+import Input from "../../atomic/input/input";
 
 function AddTodoForm ({onAdd, notify, todos}) {
   const [text, setText] = useState('');
