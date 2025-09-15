@@ -33,7 +33,7 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted, notify}) {
   }
 
   return (
-    <li className ='todoItem' key ={todo.id}>
+    <li className ='todoItem' key ={todo.id} data-todo-id={todo.id}>
       {isEditing && !showDeleteModal ? (
         //how do i implement the modal logic inbetween the form submission and its click event, for editing a todo? 
         // let onSubmit showEditModal to true, add the handleEdit click event to the onConfirm prop in the modal 
@@ -51,7 +51,7 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted, notify}) {
           variant='delete'
           type ='button' 
           onClick ={() => setIsEditing(false)}
-          >cancel</Button> 
+          >Cancel</Button> 
           </>
           )}
         </form>
@@ -62,17 +62,15 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted, notify}) {
         title='save changes?'
         message='are you sure you want to edit changes?'
         />
-        
         </>
         
-
       ) : (
         <div  style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-          <input
-          type = 'checkbox'
-          checked = {todo.completed}
-          onChange= {()=> onToggleCompleted(todo.id)} // tracking the value of checked attribute- calling a fetch request from <App/> to update the database which re-renders the todo list with update
-          ></input>
+            <input
+              type='checkbox'
+              checked={todo.completed}
+              onChange={() => onToggleCompleted(todo.id)}
+            />
           <span
           style ={{ 
             textDecoration: todo.completed ? 'line-through': 'none',
