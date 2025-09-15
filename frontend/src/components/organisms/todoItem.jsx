@@ -33,7 +33,7 @@ function TodoItem ({todo, onUpdate, onDelete, onToggleCompleted, notify}) {
   }
 
   return (
-    <li className ='todoItem' key ={todo.id} data-testId={todo.id}>
+    <li className ='todoItem' key ={todo.id} data-testid={todo.id}>
       {isEditing && !showDeleteModal ? (
         //how do i implement the modal logic inbetween the form submission and its click event, for editing a todo? 
         // let onSubmit showEditModal to true, add the handleEdit click event to the onConfirm prop in the modal 
