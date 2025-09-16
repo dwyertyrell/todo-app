@@ -21,7 +21,7 @@ return (
         setShowCompletedAllModal(true) 
         setShowClearAllModal(false)
       }
-      }> Complete all</Button>
+      }> Complete All</Button>
     </div>
 
     

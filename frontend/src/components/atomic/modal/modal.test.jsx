@@ -4,18 +4,6 @@ import { render } from "@testing-library/react";
 import Modal from "./modal";
 import userEvent from "@testing-library/user-event";
 
-/*  <Modal 
-        isOpen={showDeleteModal} 
-        title='Delete todo item?'
-        message='Are you sure you want to delete this todo?'
-        onConfirm={
-          () => {
-            onDelete(todo.id)
-            notify( `todo item deleted: "${todo.text}"`, 'success')  
-          }
-        }
-        onCancel={()=>{setShowDeleteModal(false)}}
-      />*/ 
 describe('Modal component', () => {
 
   let modal;
