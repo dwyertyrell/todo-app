@@ -17,8 +17,6 @@ describe('Adding a todo- client side validation', () => {
 
   let notification;
   let onClose;
-  let type;
-  let message;
 
   beforeEach(() => {
     todos = [];
